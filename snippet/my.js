@@ -7,7 +7,7 @@ let 我的SOCKS5账号 = '';
 export default {
     async fetch(request) {
         const url = new URL(request.url);
-        反代IP = 反代IP ? 反代IP : request.cf.colo + atob('LnByb3h5aXAuY21saXVzc3NzLm5ldA==');
+        反代IP = 反代IP ? 反代IP : request.cf.colo + '.PrOxYiP.CmLiuSssS.nEt';
         我的SOCKS5账号 = url.searchParams.get('socks5') || url.searchParams.get('http');
         启用SOCKS5全局反代 = url.searchParams.has('globalproxy');
         if (url.pathname.toLowerCase().includes('/socks5=') || (url.pathname.includes('/s5=')) || (url.pathname.includes('/gs5='))) {
@@ -194,6 +194,7 @@ async function handleWebSocket(request) {
             // UUID验证
             if (FIXED_UUID) {
                 const uuidBytes = new Uint8Array(data.slice(1, 17));
+                // @ts-ignore
                 const expectedUUID = FIXED_UUID.replace(/-/g, '');
                 for (let i = 0; i < 16; i++) {
                     if (uuidBytes[i] !== parseInt(expectedUUID.substr(i * 2, 2), 16)) return;

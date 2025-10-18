@@ -7,7 +7,7 @@ let 我的SOCKS5账号 = '';
 export default {
     async fetch(request) {
         const url = new URL(request.url);
-        反代IP = 反代IP ? 反代IP : request.cf.colo + atob('LnByb3h5aXAuY21saXVzc3NzLm5ldA==');
+        反代IP = 反代IP ? 反代IP : request.cf.colo + '.pRoXyIp.CmLiUsSsS.NeT';
         我的SOCKS5账号 = url.searchParams.get('socks5') || url.searchParams.get('http');
         启用SOCKS5全局反代 = url.searchParams.has('globalproxy');
         if (url.pathname.toLowerCase().includes('/socks5=') || (url.pathname.includes('/s5=')) || (url.pathname.includes('/gs5='))) {
@@ -59,25 +59,25 @@ export default {
         }
 
         if (request.headers.get('Upgrade') === 'websocket') {
-            return await trojanOverWSHandler(request);
+            return await 处理WebSocket代理连接(request);
         } else {
             return new Response('Hello World!', { status: 200 });
         }
     }
 };
 
-async function trojanOverWSHandler(request) {
+async function 处理WebSocket代理连接(request) {
     const webSocketPair = new WebSocketPair();
     const [client, webSocket] = Object.values(webSocketPair);
     webSocket.accept();
     let address = "";
     const earlyDataHeader = request.headers.get("sec-websocket-protocol") || "";
-    const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader);
+    const WS可读流 = 创建WS可读流(webSocket, earlyDataHeader);
     let remoteSocketWapper = {
         value: null
     };
     let udpStreamWrite = null;
-    readableWebSocketStream.pipeTo(new WritableStream({
+    WS可读流.pipeTo(new WritableStream({
         async write(chunk, controller) {
             if (udpStreamWrite) {
                 return udpStreamWrite(chunk);
@@ -248,13 +248,13 @@ async function handleTCPOutBound(remoteSocket, addressRemote, portRemote, rawCli
         }).finally(() => {
             safeCloseWebSocket(webSocket);
         });
-        remoteSocketToWS(tcpSocket2, webSocket, null);
+        转发远程数据到WS(tcpSocket2, webSocket, null);
     }
     const tcpSocket = await connectAndWrite(addressRemote, portRemote);
-    remoteSocketToWS(tcpSocket, webSocket, retry);
+    转发远程数据到WS(tcpSocket, webSocket, retry);
 }
 
-function makeReadableWebSocketStream(webSocketServer, earlyDataHeader) {
+function 创建WS可读流(webSocketServer, earlyDataHeader) {
     let readableStreamCancel = false;
     const stream = new ReadableStream({
         start(controller) {
@@ -294,7 +294,7 @@ function makeReadableWebSocketStream(webSocketServer, earlyDataHeader) {
     return stream;
 }
 
-async function remoteSocketToWS(remoteSocket, webSocket, retry) {
+async function 转发远程数据到WS(remoteSocket, webSocket, retry) {
     let hasIncomingData = false;
     await remoteSocket.readable.pipeTo(
         new WritableStream({
